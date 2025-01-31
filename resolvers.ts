@@ -47,7 +47,8 @@ export const resolvers = {
             args: MutationArgs,
             context: Context,
         ): Promise<ContactModel> => {
-            const {name, phone, direcion, ciudad} = args
+            const {name, phone, direcion} = args
+            const {ciudad} = await validatephone(phone)
             const {temperatura} = await sacarTiempo(ciudad) //uso la API para sacar el tiempo sabiendo la ciudad con el telefono
             const {horaLocal} = await sacarHora(ciudad) //uso la API para sacar la hora sabiendo la ciudad con el telefono
             const phone_exist = await context.ContactCollection.findOne({phone})
